@@ -1,6 +1,3 @@
- sp.js
-
-//©•ª‚ÌappID‚ğ“ü—Í
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var ds = milkcocoa.dataStore('countdata');
 
@@ -28,7 +25,6 @@ function namefunc(){
 
 
 
-//‰üs‚Åsubmit‚³‚¹‚È‚¢‚æ‚¤‚É‚·‚é
 function submitStop(e){
     if (!e) var e = window.event;
 
