@@ -16,13 +16,13 @@ function furu(e) {
 	// ‰Á‘¬“x‚ªˆê’èˆÈã‚Ì‚Æ‚«
 	if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
 	// ‚±‚±‚ÉU‚Á‚Ä‚¢‚é‚Æ‚«‚Ì“®ì‚ğ“ü‚ê‚é
-		alert("U‚Á‚Ä‚é‚æ");
-		count++;
-		countbox.innerHTML = 'count: '+ count;
-		data ={};
-		data.name = name;
-		data.count = count;
-		ds.send({data: data});
+		alert("shake!");
+//		count++;
+//		countbox.innerHTML = 'count: '+ count;
+//		data ={};
+//		data.name = name;
+//		data.count = count;
+//		ds.send({data: data});
 	}
 }
 
