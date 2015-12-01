@@ -14,7 +14,7 @@ function furu(e) {
 	var z = e.accelerationIncludingGravity.z; // Z•ûŒü‚Ì‰Á‘¬“x
 
 	// ‰Á‘¬“x‚ªˆê’èˆÈã‚Ì‚Æ‚«
-	if (Math.abs(x) > 50 || Math.abs(y) > 50 || Math.abs(z) > 30) {
+	if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
 	// ‚±‚±‚ÉU‚Á‚Ä‚¢‚é‚Æ‚«‚Ì“®ì‚ğ“ü‚ê‚é
 		alert("shake!");
 //		count++;
