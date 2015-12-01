@@ -6,7 +6,8 @@ var countbox = document.getElementById('count');
 var nameform = document.getElementById('nameform');
 
 
-var shakecheck = function(name) {
+function furu(e) {
+		alert("test");
 	var x = e.accelerationIncludingGravity.x; // X•ûŒü‚Ì‰Á‘¬“x
 	var y = e.accelerationIncludingGravity.y; // Y•ûŒü‚Ì‰Á‘¬“x
 	var z = e.accelerationIncludingGravity.z; // Z•ûŒü‚Ì‰Á‘¬“x
@@ -33,7 +34,7 @@ function initialize() {
 function namefunc(){
 	name = document.nameform.nameval.value;
 	nameform.innerHTML = "your name " + name;
-	shakecheck(name);
+	//shakecheck(name);
 } 
 
 function submitStop(e){
