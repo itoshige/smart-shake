@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>スマフォを振ると感知するデモ</title>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/> 
+<link rel="stylesheet" href="style.css">
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">
+    google.load("jquery", "1.6.4");
+</script>
+
+<script type="text/javascript">
+$(document).ready(initialize);
+
+// 端末の角度が変わった時
+function initialize() {
+	window.addEventListener('devicemotion', function (e) {
+		return furu(e);
+	}, true);
+}
+
+// 端末を振ったときの挙動
+function furu(e) {
+    var x = e.accelerationIncludingGravity.x; // X方向の加速度
+    var y = e.accelerationIncludingGravity.y; // Y方向の加速度
+    var z = e.accelerationIncludingGravity.z; // Z方向の加速度
+
+    // 加速度が一定以上のとき
+    if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
+		alert("振ってるよ");
+	}
+ }
+
+</script>
+
+</head>
+<body>
+</body>
+</html>
