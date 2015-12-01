@@ -6,8 +6,10 @@ var countbox = document.getElementById('count');
 var nameform = document.getElementById('nameform');
 
 
+initialize();
+
 function furu(e) {
-		alert("test");
+	alert("test");
 	var x = e.accelerationIncludingGravity.x; // X•ûŒü‚Ì‰Á‘¬“x
 	var y = e.accelerationIncludingGravity.y; // Y•ûŒü‚Ì‰Á‘¬“x
 	var z = e.accelerationIncludingGravity.z; // Z•ûŒü‚Ì‰Á‘¬“x
