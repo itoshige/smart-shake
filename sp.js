@@ -1,14 +1,11 @@
+var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
+var ds = milkcocoa.dataStore('countdata');
 
-window.onload = function() {
-	var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
-	var ds = milkcocoa.dataStore('countdata');
+var count = 0;
+var countbox = document.getElementById('count');
+var nameform = document.getElementById('nameform');
 
-	var count = 0;
-	var countbox = document.getElementById('count');
-	var nameform = document.getElementById('nameform');
-
-	initialize();
-}
+initialize();
 
 function furu(e) {
 	var x = e.accelerationIncludingGravity.x; // X•ûŒü‚Ì‰Á‘¬“x
