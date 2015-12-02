@@ -11,9 +11,10 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <head/>
 <body>
-    <form id ="nameform" name="nameform" class="form-inline">
+    <form id ="nameform" name="nameform">
 		<div class="form-group">
-			What your name ?<input type="text" id ="nameval" class="form-control" placeholder="Jane Doe" name="nameval" onKeyPress="return submitStop(event);" value="">
+			<label for="exampleInputEmail1">Your name</label>
+			<input type="text" id ="nameval" class="form-control" placeholder="Jane Doe" name="nameval" onKeyPress="return submitStop(event);" value="">
 			<input type="button" value="entry" class="btn btn-info" onclick="namefunc()"><br>
 		</div>
 	</form>
