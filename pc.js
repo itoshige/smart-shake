@@ -5,10 +5,11 @@ var countbox = document.getElementById('count');
 ds.on('send', countview);
 
 function countview(sent){
-//	if(sent.value.data.count >= 2){
-//		var oldelement = document.getElementById(sent.value.data.name);
-//		oldelement.parentNode.removeChild(oldelement);
-//	}
+	if(sent.value.data.count >= 2){
+		var oldelement = document.getElementById(sent.value.data.name);
+		if(null != oldelement && null != oldelement.parentNode)
+			oldelement.parentNode.removeChild(oldelement);
+	}
 
 	var newelement = document.createElement('div'); 
 	newelement.id = sent.value.data.name; 
