@@ -11,11 +11,13 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <head/>
 <body>
-    <form id ="nameform" name="nameform">
-        What your name ?<input type="text" id ="nameval" name="nameval" onKeyPress="return submitStop(event);" value=""><br>
-        <input type="button" value="send" onclick="namefunc()"><br>
-    </form>
-    <div id="count"></div>
-    <script src="sp.js"></script>
+    <form id ="nameform" name="nameform" class="form-inline">
+		<div class="form-group">
+			What your name ?<input type="text" id ="nameval" class="form-control" placeholder="Jane Doe" name="nameval" onKeyPress="return submitStop(event);" value="">
+			<input type="button" value="entry" class="btn btn-info" onclick="namefunc()"><br>
+		</div>
+	</form>
+	<div id="count"></div>
+	<script src="sp.js"></script>
 </body>
 </html>
