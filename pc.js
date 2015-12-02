@@ -5,7 +5,7 @@ var countbox = document.getElementById('count');
 ds.on('send', countview);
 
 function countview(sent){
-/	if(sent.value.data.count >= 2){
+//	if(sent.value.data.count >= 2){
 //		var oldelement = document.getElementById(sent.value.data.name);
 //		oldelement.parentNode.removeChild(oldelement);
 //	}
