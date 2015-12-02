@@ -3,7 +3,7 @@ var ds = milkcocoa.dataStore('countdata');
 
 var count = 0;
 var countbox = document.getElementById('count');
-var nameform = document.getElementById('nameform');
+var nameform = document.getElementById('login-form');
 
 var shakecheck = function(name) {
   $(this).gShake(function() {
@@ -17,8 +17,8 @@ var shakecheck = function(name) {
 }
 
 function namefunc(){
-    name = document.nameform.nameval.value;
-    nameform.innerHTML = "your name " + name;
+    name = document.getElementById('login-name').value;
+    login-form.innerHTML = "your name " + name;
     shakecheck(name);
 } 
 
