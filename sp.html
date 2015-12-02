@@ -13,9 +13,13 @@
 <body>
     <form id ="nameform" name="nameform">
 		<div class="form-group">
-			<label for="exampleInputEmail1">Your name</label>
-			<input type="text" id ="nameval" class="form-control" placeholder="Jane Doe" name="nameval" onKeyPress="return submitStop(event);" value="">
-			<input type="button" value="entry" class="btn btn-info" onclick="namefunc()"><br>
+			<div class="row">
+				<div class="col-xs-3">
+					<label for="exampleInputEmail1">Your name</label>
+					<input type="text" id ="nameval" class="form-control" placeholder="Jane Doe" name="nameval" onKeyPress="return submitStop(event);" value="">
+					<input type="button" value="entry" class="btn btn-info" onclick="namefunc()"><br>
+				</div>
+			</div>
 		</div>
 	</form>
 	<div id="count"></div>
