@@ -6,7 +6,7 @@ var countbox = document.getElementById('count');
 var nameform = document.getElementById('nameform');
 
 
-$(document).ready(initialize);
+//$(document).ready(initialize);
 
 function furu(e) {
 	var x = e.accelerationIncludingGravity.x; // X•ûŒü‚Ì‰Á‘¬“x
@@ -16,20 +16,20 @@ function furu(e) {
 	// ‰Á‘¬“x‚ªˆê’èˆÈã‚Ì‚Æ‚«
 	if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
 	// ‚±‚±‚ÉU‚Á‚Ä‚¢‚é‚Æ‚«‚Ì“®ì‚ğ“ü‚ê‚é
-		alert(Math.abs(x) + " : " + Math.abs(y) + " : " + Math.abs(z));
-//		count++;
-//		countbox.innerHTML = 'count: '+ count;
-//		data ={};
-//		data.name = name;
-//		data.count = count;
-//		ds.send({data: data});
+	//alert(Math.abs(x) + " : " + Math.abs(y) + " : " + Math.abs(z));
+		count++;
+		countbox.innerHTML = 'count: '+ count;
+		data ={};
+		data.name = name;
+		data.count = count;
+		ds.send({data: data});
 	}
 }
 
 function initialize() {
 	window.addEventListener('devicemotion', function (e) {
 		return furu(e);
-	}, true);
+	}, false);
 }	
 
 function namefunc(){
