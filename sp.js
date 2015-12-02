@@ -6,42 +6,29 @@ var countbox = document.getElementById('count');
 var nameform = document.getElementById('nameform');
 
 
-//$(document).ready(initialize);
-
-function furu(e) {
-	var x = e.accelerationIncludingGravity.x; // X方向の加速度
-	var y = e.accelerationIncludingGravity.y; // Y方向の加速度
-	var z = e.accelerationIncludingGravity.z; // Z方向の加速度
-
-	// 加速度が一定以上のとき
-	if (Math.abs(x) > 15 || Math.abs(y) > 15 || Math.abs(z) > 15) {
-	// ここに振っているときの動作を入れる
-	//alert(Math.abs(x) + " : " + Math.abs(y) + " : " + Math.abs(z));
-		count++;
-		countbox.innerHTML = 'count: '+ count;
-		data ={};
-		data.name = name;
-		data.count = count;
-		ds.send({data: data});
-	}
+var shakecheck = function(name) {
+  $(this).gShake(function() {
+    count++;
+    countbox.innerHTML = 'count: '+ count;
+    data ={};
+    data.name = name;
+    data.count = count;
+    ds.send({data: data});
+  });
 }
-
-function initialize() {
-	window.addEventListener('devicemotion', function (e) {
-		return furu(e);
-	}, false);
-}	
 
 function namefunc(){
-	name = document.nameform.nameval.value;
-	nameform.innerHTML = "your name " + name;
-	//shakecheck(name);
+    name = document.nameform.nameval.value;
+    nameform.innerHTML = "your name " + name;
+    shakecheck(name);
 } 
 
+
+
+//改行でsubmitさせないようにする
 function submitStop(e){
-	if (!e) var e = window.event;
+    if (!e) var e = window.event;
 
-	if(e.keyCode == 13)
-		return false;
+    if(e.keyCode == 13)
+        return false;
 }
-
