@@ -18,7 +18,7 @@ var shakecheck = function(name) {
 
 function namefunc(){
     name = document.getElementById('inputName').value;
-    loginform.innerHTML = "<h4>" + "" + name + " san</h4>";
+    loginform.innerHTML = "<h4>Your name : " + name + "</h4>";
     shakecheck(name);
 } 
 
