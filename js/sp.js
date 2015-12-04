@@ -3,7 +3,7 @@ var ds = milkcocoa.dataStore('countdata');
 
 var count = 0;
 var countbox = document.getElementById('count');
-var loginform = document.getElementById('contact');
+var loginform = document.getElementById('context');
 
 var shakecheck = function(name) {
   $(this).gShake(function() {
