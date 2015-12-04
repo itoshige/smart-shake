@@ -8,7 +8,7 @@ var loginform = document.getElementById('context');
 var shakecheck = function(name) {
   $(this).gShake(function() {
     count++;
-    countbox.innerHTML = 'count: '+ count;
+    countbox.innerHTML = count + ' shake!';
     data ={};
     data.name = name;
     data.count = count;
@@ -18,7 +18,7 @@ var shakecheck = function(name) {
 
 function namefunc(){
     name = document.getElementById('inputName').value;
-    loginform.innerHTML = "<h4>" + "your name " + name + "</h4>";
+    loginform.innerHTML = "<h4>" + "" + name + " san</h4>";
     shakecheck(name);
 } 
 
