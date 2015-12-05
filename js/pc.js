@@ -1,5 +1,7 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var user = milkcocoa.dataStore('shake/user');
+user.on('send', countview);
+
 var countbox = document.getElementById('count');
 
 var game = milkcocoa.dataStore('shake/game');
@@ -13,8 +15,6 @@ game.get('start', function(err, datum) {
 		context.innerHTML = "Game start!";
 	}
 });
-
-user.on('send', countview);
 
 function startGame() {
 	context.innerHTML = "Game start!";
