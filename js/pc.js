@@ -26,6 +26,7 @@ function resetGame() {
 }
 
 function clearData() {
+	countbox.innerHTML = "";
 	game.send({'clear': true});
 }
 

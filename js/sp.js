@@ -6,6 +6,7 @@ var count = (storageCount) ? storageCount : 0;
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
 
+var isStarted = false;
 var name = "";
 
 var game = milkcocoa.dataStore('shake/game');
@@ -21,6 +22,8 @@ window.alert = function() {};
 
 var shake = function(name) {
   $(this).gShake(function() {
+  	if(!isStarted) return;
+  	
     count++;
     countbox.innerHTML = count + ' shake!';
     window.localStorage.setItem("count", count);
@@ -68,9 +71,11 @@ function displaySP(start) {
 	if(start) {
 		countbox.innerHTML = count + ' shake!';
 		shake(name);
+		isStarted = true;
 	} else {
 		countbox.innerHTML = 'Waiting for start.';
 		count = 0;
+		isStarted = false;
 	}
 }
 
