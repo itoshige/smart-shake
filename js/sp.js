@@ -7,7 +7,12 @@ var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
 
 var isStarted = false;
-var name = "";
+
+var storageName = window.localStorage.getItem('username');
+var name = (storageName) ? storageName : "";
+if(name) {
+	entryGame(name);
+}
 
 var game = milkcocoa.dataStore('shake/game');
 game.on('send', function(sent) {
@@ -31,11 +36,7 @@ var shake = function(name) {
   });
 }
 
-if(window.localStorage.getItem('username')) {
-	entryGame(window.localStorage.getItem('username'));
-}
-
-function displayPC(name,count) {
+function displayPC(name, count) {
 	var data ={};
 	data.name = name;
 	data.count = count;
