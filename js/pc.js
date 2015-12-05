@@ -22,10 +22,12 @@ function startGame() {
 }
 
 function resetGame() {
+	context.innerHTML = "Waiting for start.";
 	game.set('start', {'flag': false});
 }
 
 function clearData() {
+	context.innerHTML = "Waiting for start.";
 	countbox.innerHTML = "";
 	game.send({'clear': true});
 }

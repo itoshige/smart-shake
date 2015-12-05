@@ -57,7 +57,6 @@ function entryGame(name){
 		countbox.innerHTML = 'Waiting for start.';
 		if(err) return;
 		
-		displayPC(name, 0);
 		game.on('set', startgame);
 		
 		displaySP(datum.value.flag);
@@ -78,6 +77,7 @@ function displaySP(start) {
 	} else {
 		countbox.innerHTML = 'Waiting for start.';
 		count = 0;
+		displayPC(name, 0);
 		isStarted = false;
 	}
 }
