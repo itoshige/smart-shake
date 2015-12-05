@@ -6,14 +6,6 @@ var count = (storageCount) ? storageCount : 0;
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
 
-var isStarted = false;
-
-var storageName = window.localStorage.getItem('username');
-var name = (storageName) ? storageName : "";
-if(name) {
-	entryGame(name);
-}
-
 var game = milkcocoa.dataStore('shake/game');
 game.on('send', function(sent) {
 	if(sent.value.clear) {
@@ -22,6 +14,12 @@ game.on('send', function(sent) {
 		window.location.reload();
 	}
 });
+
+var isStarted = false;
+
+var storageName = window.localStorage.getItem('username');
+var name = (storageName) ? storageName : "";
+if(name) entryGame(name);
 
 window.alert = function() {};
 
@@ -34,6 +32,10 @@ var shake = function(name) {
     window.localStorage.setItem("count", count);
     displayPC(name, count);
   });
+}
+
+if(window.localStorage.getItem('username')) {
+	entryGame(window.localStorage.getItem('username'));
 }
 
 function displayPC(name, count) {
