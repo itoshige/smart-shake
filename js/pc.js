@@ -1,6 +1,6 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var users = milkcocoa.dataStore('shake/users');
-users.on('push', countview);
+users.on('set', countview);
 
 var countbox = document.getElementById('count');
 
@@ -31,17 +31,24 @@ function clearData() {
 	countbox.innerHTML = "";
 	game.set('start', {'flag': false});
 	game.send({'clear': true});
+	
+	users.stream().next(function(err, data) {
+		for(var i=0; i<data.length; i++) {
+		    var uname = data[i].id;
+		    users.remove(uname);
+		}
+	});
 }
 
 function countview(sent){
-	if(sent.value.user.count >= 2){
-		var oldelement = document.getElementById(sent.value.user.name);
+	if(sent.value.count >= 1){
+		var oldelement = document.getElementById(sent.id);
 		if(null != oldelement && null != oldelement.parentNode)
 			oldelement.parentNode.removeChild(oldelement);
 	}
 
 	var newelement = document.createElement('div');
-	newelement.id = sent.value.user.name; 
-	newelement.innerHTML = "name: " + sent.value.user.name + "  count : " + sent.value.user.count;
+	newelement.id = sent.id; 
+	newelement.innerHTML = "name: " + sent.id + "  count : " + sent.value.count;
 	countbox.appendChild(newelement); 
 }

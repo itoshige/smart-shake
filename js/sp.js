@@ -37,10 +37,7 @@ var shake = function(name) {
 }
 
 function displayPC(name, count) {
-	var data ={};
-	data.name = name;
-	data.count = count;
-	users.push({'user': data});
+	users.set(name, {'count': count});
 }
 
 function entry() {
@@ -51,7 +48,7 @@ function entry() {
 function entryGame(name){
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-		    var uname = data[i].value.user.name;
+		    var uname = data[i].id;
 		    if(uname === name) {
 		    	error.innerHTML = "User name you entered is already in use. Please enter another user name. ";
 		    	return;
