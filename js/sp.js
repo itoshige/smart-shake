@@ -1,10 +1,12 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
-var user = milkcocoa.dataStore('shake/user');
+var users = milkcocoa.dataStore('shake/users');
 
 var storageCount = window.localStorage.getItem('count');
 var count = (storageCount) ? storageCount : 0;
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
+
+var error = document.getElementById('error');
 
 var game = milkcocoa.dataStore('shake/game');
 game.on('send', function(sent) {
@@ -34,15 +36,11 @@ var shake = function(name) {
   });
 }
 
-if(window.localStorage.getItem('username')) {
-	entryGame(window.localStorage.getItem('username'));
-}
-
 function displayPC(name, count) {
 	var data ={};
 	data.name = name;
 	data.count = count;
-	user.send({'data': data});
+	users.push({'user': data});
 }
 
 function entry() {
@@ -51,18 +49,28 @@ function entry() {
 }
 
 function entryGame(name){
-	loginform.innerHTML = "<h5>Your name : " + name + "</h5>";
+	users.stream().next(function(err, data) {
+		for(var i=0; i<data.length; i++) {
+		    var uname = data[i].value.user.name;
+		    if(uname === name) {
+		    	error.innerHTML = "User name you entered is already in use. Please enter another user name. ";
+		    	return;
+		    }
+		}
+		
+		loginform.innerHTML = "<h5>Your name : " + name + "</h5>";
 
-	game.get('start', function(err, datum) {
-		countbox.innerHTML = 'Waiting for start.';
-		if(err) return;
+		game.get('start', function(err, datum) {
+			countbox.innerHTML = 'Waiting for start.';
+			if(err) return;
+			
+			game.on('set', startgame);
+			
+			displaySP(datum.value.flag);
+		});
 		
-		game.on('set', startgame);
-		
-		displaySP(datum.value.flag);
+		window.localStorage.setItem("username", name);
 	});
-	
-	window.localStorage.setItem("username", name);
 }
 
 function startgame(set) {

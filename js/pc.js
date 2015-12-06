@@ -1,6 +1,6 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
-var user = milkcocoa.dataStore('shake/user');
-user.on('send', countview);
+var users = milkcocoa.dataStore('shake/users');
+users.on('push', countview);
 
 var countbox = document.getElementById('count');
 
@@ -29,18 +29,19 @@ function resetGame() {
 function clearData() {
 	context.innerHTML = "Waiting for start.";
 	countbox.innerHTML = "";
+	game.set('start', {'flag': false});
 	game.send({'clear': true});
 }
 
 function countview(sent){
-	if(sent.value.data.count >= 2){
-		var oldelement = document.getElementById(sent.value.data.name);
+	if(sent.value.user.count >= 2){
+		var oldelement = document.getElementById(sent.value.user.name);
 		if(null != oldelement && null != oldelement.parentNode)
 			oldelement.parentNode.removeChild(oldelement);
 	}
 
 	var newelement = document.createElement('div');
-	newelement.id = sent.value.data.name; 
-	newelement.innerHTML = "name: " + sent.value.data.name + "  count : " + sent.value.data.count;
+	newelement.id = sent.value.user.name; 
+	newelement.innerHTML = "name: " + sent.value.user.name + "  count : " + sent.value.user.count;
 	countbox.appendChild(newelement); 
 }
