@@ -7,17 +7,22 @@ var countbox = document.getElementById('count');
 var game = milkcocoa.dataStore('shake/game');
 
 var context = document.getElementById('context');
-game.get('start', function(err, datum) {
+game.get('type', function(err, datum) {
 	context.innerHTML = "Waiting for start.";
 	if(err) return;
 	
-	if(datum.value.flag) {
+	if(datum[0].id === 'start') {
 		context.innerHTML = "Game start!";
 	}
 });
 
 function startGame() {
 	context.innerHTML = "Game start!";
+	game.set('start', {'flag': true});
+}
+
+function stopGame() {
+	context.innerHTML = "Game stop!";
 	game.set('start', {'flag': true});
 }
 

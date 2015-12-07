@@ -1,29 +1,29 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var users = milkcocoa.dataStore('shake/users');
 
-var storageCount = window.localStorage.getItem('count');
-var count = (storageCount) ? storageCount : 0;
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
 
 var error = document.getElementById('error');
 
 var game = milkcocoa.dataStore('shake/game');
-game.on('send', function(sent) {
-	if(sent.value.clear) {
-		window.localStorage.removeItem('username');
-		window.localStorage.removeItem('count');
-		window.location.reload();
-	}
-});
+
 
 var isStarted = false;
 
-var storageName = window.localStorage.getItem('username');
-var name = (storageName) ? storageName : "";
-if(name) entryGame(name);
+var id = (window.localStorage.getItem('id')) ? window.localStorage.getItem('id') : getRandomID();
+window.localStorage.setItem('id', id);
+var count = 0;
+users.get(id, function(err, datum) {
+	if(err) return;
+	
+	var uname = datum.value.name;
+	if(!uname) return;
+	
+	count = datum.value.count;
+	entryGame(uname);
+});
 
-window.alert = function() {};
 
 var shake = function(name) {
   $(this).gShake(function() {
@@ -31,15 +31,15 @@ var shake = function(name) {
   	
     count++;
     countbox.innerHTML = count + ' shake!';
-    window.localStorage.setItem("count", count);
     displayPC(name, count);
   });
 }
 
 function displayPC(name, count) {
-	users.set(name, {'count': count});
+	users.set(id, {'name': name, 'count': count});
 }
 
+var name = "";
 function entry() {
 	name = document.getElementById('inputName').value;
 	entryGame(name);
@@ -48,9 +48,9 @@ function entry() {
 function entryGame(name){
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-		    var uname = data[i].id;
+		    var uname = data[i].value.name;
 		    if(uname === name) {
-		    	error.innerHTML = "User name you entered is already in use. Please enter another user name. ";
+		    	error.innerHTML = "Tean name you entered is already in use. Please enter another team name. ";
 		    	return;
 		    }
 		}
@@ -63,15 +63,14 @@ function entryGame(name){
 			
 			game.on('set', startgame);
 			
-			displaySP(datum.value.flag);
+			startgame(datum);
 		});
-		
-		window.localStorage.setItem("username", name);
 	});
 }
 
 function startgame(set) {
 	displaySP(set.value.flag);
+	displayPC(name, count);
 }
 
 function displaySP(start) {
@@ -81,8 +80,6 @@ function displaySP(start) {
 		isStarted = true;
 	} else {
 		countbox.innerHTML = 'Waiting for start.';
-		count = 0;
-		displayPC(name, 0);
 		isStarted = false;
 	}
 }
@@ -93,4 +90,23 @@ function submitStop(e){
 
     if(e.keyCode == 13)
         return false;
+}
+
+
+
+// 1文字ずつピックアップする方法
+function method2() {
+  var l = 10; // 生成する文字列の長さ
+  var c = "abcdefghijklmnopqrstuvwxyz0123456789"; // 生成する文字列に含める文字セット
+  var cl = c.length;
+  var r = "";
+  for (var i = 0; i < l; i++) {
+    r += c[Math.floor(Math.random() * cl)];
+  }
+  return r;
+}
+
+// 普通に1文字ずつピックアップする方法を実行
+function getRandomID() {
+  return method2();
 }
