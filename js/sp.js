@@ -3,23 +3,22 @@ var users = milkcocoa.dataStore('shake/users');
 
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
-
 var error = document.getElementById('error');
 
 var game = milkcocoa.dataStore('shake/game');
 
 
-var isStarted = false;
-
 var id = (window.localStorage.getItem('id')) ? window.localStorage.getItem('id') : getRandomID();
 window.localStorage.setItem('id', id);
 var count = 0;
+var name = "";
 users.get(id, function(err, datum) {
 	if(err) return;
 	
 	var uname = datum.value.name;
 	if(!uname) return;
 	
+	name = uname;
 	count = datum.value.count;
 	entryGame(uname);
 });
@@ -27,8 +26,6 @@ users.get(id, function(err, datum) {
 
 var shake = function(name) {
   $(this).gShake(function() {
-  	if(!isStarted) return;
-  	
     count++;
     countbox.innerHTML = count + ' shake!';
     displayPC(name, count);
@@ -39,7 +36,6 @@ function displayPC(name, count) {
 	users.set(id, {'name': name, 'count': count});
 }
 
-var name = "";
 function entry() {
 	name = document.getElementById('inputName').value;
 	entryGame(name);
@@ -49,8 +45,9 @@ function entryGame(name){
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
 		    var uname = data[i].value.name;
-		    if(uname === name) {
-		    	error.innerHTML = "Tean name you entered is already in use. Please enter another team name. ";
+		    var uid = data[i].id;
+		    if(uname === name && uid !== id) {
+		    	error.innerHTML = "Team name you entered is already in use. Please enter another team name. ";
 		    	return;
 		    }
 		}
@@ -77,10 +74,8 @@ function displaySP(start) {
 	if(start) {
 		countbox.innerHTML = count + ' shake!';
 		shake(name);
-		isStarted = true;
 	} else {
 		countbox.innerHTML = 'Waiting for start.';
-		isStarted = false;
 	}
 }
 
