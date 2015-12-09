@@ -25,8 +25,14 @@ users.get(id, function(err, datum) {
 
 var shake = function(name) {
 	$(this).gShake(function() {
+		users.get(id, function(err, datum) {
+			if(err) {
+				window.location.reload();
+				errors.innerHTML = "Please login again.";
+			}
+		});
+
 		game.get('start', function(err, datum) {
-			alert(!datum.value.flag);
 			if(!datum.value.flag) {
 				countbox.innerHTML = 'Waiting for start.';
 				count = 0;
