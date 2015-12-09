@@ -3,6 +3,7 @@ var users = milkcocoa.dataStore('shake/users');
 
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
+var errors = document.getElementById('error');
 
 var game = milkcocoa.dataStore('shake/game');
 
@@ -40,10 +41,15 @@ function entry() {
 }
 
 function entryGame(){
+	if(!name) {
+		errors.innerHTML = "Please input your team name.";
+		return;
+	}
+
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
 		    if(data[i].value.name === name && data[i].id !== id) {
-		    	document.getElementById('error').innerHTML = "Tean name you entered is already in use. Please enter another team name. ";
+		    	errors.innerHTML = "Team name you entered is already in use. Please enter another team name. ";
 		    	return;
 		    }
 		}

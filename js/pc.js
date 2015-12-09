@@ -66,5 +66,5 @@ function exec4users(func) {
 }
 
 function display4userset(sent) {
-	display(id, name, count);
+	display(sent.id, sent.value.name, sent.value.count);
 }
