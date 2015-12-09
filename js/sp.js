@@ -31,7 +31,7 @@ var shake = function(name) {
 				errors.innerHTML = "Please login again.";
 			}
 		});
-
+		
 		game.get('start', function(err, datum) {
 			if(!datum.value.flag) {
 				countbox.innerHTML = 'Waiting for start.';
