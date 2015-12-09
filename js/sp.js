@@ -3,10 +3,8 @@ var users = milkcocoa.dataStore('shake/users');
 
 var countbox = document.getElementById('count');
 var loginform = document.getElementById('context');
-var error = document.getElementById('error');
 
 var game = milkcocoa.dataStore('shake/game');
-
 
 var id = (window.localStorage.getItem('id')) ? window.localStorage.getItem('id') : getRandomID();
 window.localStorage.setItem('id', id);
@@ -20,7 +18,7 @@ users.get(id, function(err, datum) {
 	
 	name = uname;
 	count = datum.value.count;
-	entryGame(uname);
+	entryGame();
 });
 
 
@@ -38,16 +36,14 @@ function displayPC(name, count) {
 
 function entry() {
 	name = document.getElementById('inputName').value;
-	entryGame(name);
+	entryGame();
 }
 
-function entryGame(name){
+function entryGame(){
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-		    var uname = data[i].value.name;
-		    var uid = data[i].id;
-		    if(uname === name && uid !== id) {
-		    	error.innerHTML = "Team name you entered is already in use. Please enter another team name. ";
+		    if(data[i].value.name === name && data[i].id !== id) {
+		    	document.getElementById('error').innerHTML = "Tean name you entered is already in use. Please enter another team name. ";
 		    	return;
 		    }
 		}
@@ -66,17 +62,17 @@ function entryGame(name){
 }
 
 function startgame(set) {
-	displaySP(set.value.flag);
+	displaySP(set.value.flag, name);
 	displayPC(name, count);
 }
 
-function displaySP(start) {
-	if(start) {
-		countbox.innerHTML = count + ' shake!';
-		shake(name);
-	} else {
+function displaySP(start, name) {
+	if(!start) {
 		countbox.innerHTML = 'Waiting for start.';
+		return;
 	}
+	countbox.innerHTML = count + ' shake!';
+	shake(name);
 }
 
 //改行でsubmitさせないようにする
@@ -86,8 +82,6 @@ function submitStop(e){
     if(e.keyCode == 13)
         return false;
 }
-
-
 
 // 1文字ずつピックアップする方法
 function method2() {

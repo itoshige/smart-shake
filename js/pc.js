@@ -1,6 +1,6 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var users = milkcocoa.dataStore('shake/users');
-users.on('set', countview);
+users.on('set', display4userset);
 
 var countbox = document.getElementById('count');
 
@@ -11,9 +11,25 @@ game.get('start', function(err, datum) {
 	context.innerHTML = "Waiting for start.";
 	if(err) return;
 	
-	if(datum.value.flag) 
+	if(datum.value.flag) {
 		context.innerHTML = "Game start!";
+	}
 });
+
+var display = function(id, name, count){
+	var existedDiv = document.getElementById(id);
+	if(existedDiv) {
+		existedDiv.innerHTML = "name: " + name + "  count : " + count;
+		return;
+	}
+	
+	var newelement = document.createElement('div');
+	newelement.id = id; 
+	newelement.innerHTML = "name: " + name + "  count : " + count;
+	countbox.appendChild(newelement); 
+}
+
+exec4users(display);
 
 function startGame() {
 	context.innerHTML = "Game start!";
@@ -23,6 +39,11 @@ function startGame() {
 function resetGame() {
 	context.innerHTML = "Waiting for start.";
 	game.set('start', {'flag': false});
+	
+	var resetCount = function(id, name) {
+		document.getElementById(id).innerHTML = "name: " + name + "  count : " + 0;
+	}
+	exec4users(resetCount);
 }
 
 function clearData() {
@@ -30,29 +51,20 @@ function clearData() {
 	countbox.innerHTML = "";
 	game.set('start', {'flag': false});
 	
+	var removeUsers = function(id) {
+		users.remove(id);
+	}
+	exec4users(removeUsers);
+}
+
+function exec4users(func) {
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-		    users.remove(data[i].id);
+		    func(data[i].id, data[i].value.name, data[i].value.count);
 		}
 	});
 }
 
-function countview(sent){
-	var existedId = document.getElementById(sent.id);
-	
-	if(existedId) {
-		existedId.innerHTML = "name: " + sent.value.name + "  count : " + sent.value.count;
-		return;
-	}
-
-//	if(sent.value.count >= 1){
-//		var oldelement = document.getElementById(sent.id);
-//		if(null != oldelement && null != oldelement.parentNode)
-//			oldelement.parentNode.removeChild(oldelement);
-//	}
-
-	var newelement = document.createElement('div');
-	newelement.id = sent.id; 
-	newelement.innerHTML = "name: " + sent.value.name + "  count : " + sent.value.count;
-	countbox.appendChild(newelement); 
+function display4userset(sent) {
+	display(id, name, count);
 }
