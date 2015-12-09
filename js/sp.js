@@ -24,20 +24,20 @@ users.get(id, function(err, datum) {
 
 
 var shake = function(name) {
-	$(this).gShake(function() {
-	
-		game.get('start', function(err, datum) {
-			if(!datum.value.flag || err) {
-				countbox.innerHTML = 'Waiting for start.';
-				count = 0;
-				return;
-			}
+	game.get('start', function(err, datum) {
+		alert(datum.value.flag);
+		alert(!datum.value.flag || err);
+		if(!datum.value.flag || err) {
+			countbox.innerHTML = 'Waiting for start.';
+			count = 0;
+			return;
+		}
 
-			count++;
-			countbox.innerHTML = count + ' shake!';
-			updateUser(name, count);
+		$(this).gShake(function() {
+				count++;
+				countbox.innerHTML = count + ' shake!';
+				updateUser(name, count);	
 		});
-	
 	});
 }
 
