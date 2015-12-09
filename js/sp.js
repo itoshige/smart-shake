@@ -25,7 +25,7 @@ users.get(id, function(err, datum) {
 
 var shake = function(name) {
 	game.get('start', function(err, datum) {
-
+		
 		$(this).gShake(function() {
 			if(!datum.value.flag || err != null) {
 				countbox.innerHTML = 'Waiting for start.';
