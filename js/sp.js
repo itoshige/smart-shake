@@ -27,15 +27,15 @@ var shake = function(name) {
 	game.get('start', function(err, datum) {
 		
 		$(this).gShake(function() {
-			if(!datum.value.flag || err != null) {
+			if(!datum.value.flag) {
 				countbox.innerHTML = 'Waiting for start.';
 				count = 0;
 				return;
+			} else {
+				count++;
+				countbox.innerHTML = count + ' shake!';
+				updateUser(name, count);
 			}
-			
-			count++;
-			countbox.innerHTML = count + ' shake!';
-			updateUser(name, count);	
 		});
 	});
 }
