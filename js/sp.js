@@ -27,11 +27,11 @@ var shake = function(name) {
   $(this).gShake(function() {
     count++;
     countbox.innerHTML = count + ' shake!';
-    displayPC(name, count);
+    updateUser(name, count);
   });
 }
 
-function displayPC(name, count) {
+function updateUser(name, count) {
 	users.set(id, {'name': name, 'count': count});
 }
 
@@ -62,6 +62,7 @@ function entryGame(){
 			
 			game.on('set', startgame);
 			
+			updateUser(name, count);
 			startgame(datum);
 		});
 	});
@@ -69,7 +70,6 @@ function entryGame(){
 
 function startgame(set) {
 	displaySP(set.value.flag, name);
-	displayPC(name, count);
 }
 
 function displaySP(start, name) {
