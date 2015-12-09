@@ -29,19 +29,20 @@ var shake = function(name) {
 			if(err) {
 				window.location.reload();
 				errors.innerHTML = "Please login again.";
-			}
-		});
-		
-		game.get('start', function(err, datum) {
-			if(!datum.value.flag) {
-				countbox.innerHTML = 'Waiting for start.';
-				count = 0;
 				return;
-			} else {
-				count++;
-				countbox.innerHTML = count + ' shake!';
-				updateUser(name, count);
 			}
+			
+			game.get('start', function(err, datum) {
+				if(!datum.value.flag) {
+					countbox.innerHTML = 'Waiting for start.';
+					count = 0;
+					return;
+				} else {
+					count++;
+					countbox.innerHTML = count + ' shake!';
+					updateUser(name, count);
+				}
+			});
 		});
 	});
 }
