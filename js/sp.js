@@ -25,19 +25,17 @@ users.get(id, function(err, datum) {
 
 var shake = function(name) {
 	game.get('start', function(err, datum) {
-		alert(datum.value.flag);
-		alert(!datum.value.flag || err);
-		if(!datum.value.flag || err) {
-			countbox.innerHTML = 'Waiting for start.';
-			count = 0;
-			return;
-		}
 
 		$(this).gShake(function() {
-				alert('test');
-				count++;
-				countbox.innerHTML = count + ' shake!';
-				updateUser(name, count);	
+			if(!datum.value.flag || err != null) {
+				countbox.innerHTML = 'Waiting for start.';
+				count = 0;
+				return;
+			}
+			
+			count++;
+			countbox.innerHTML = count + ' shake!';
+			updateUser(name, count);	
 		});
 	});
 }
