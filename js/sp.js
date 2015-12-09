@@ -27,7 +27,7 @@ var shake = function(name) {
 	$(this).gShake(function() {
 	
 		game.get('start', function(err, datum) {
-			if(err || datum.value.flag === false) {
+			if(!datum.value.flag || err) {
 				countbox.innerHTML = 'Waiting for start.';
 				count = 0;
 				return;
