@@ -24,11 +24,21 @@ users.get(id, function(err, datum) {
 
 
 var shake = function(name) {
-  $(this).gShake(function() {
-    count++;
-    countbox.innerHTML = count + ' shake!';
-    updateUser(name, count);
-  });
+	$(this).gShake(function() {
+	
+		game.get('start', function(err, datum) {
+			if(err || datum.value.flag === false) {
+				countbox.innerHTML = 'Waiting for start.';
+				count = 0;
+				return;
+			}
+
+			count++;
+			countbox.innerHTML = count + ' shake!';
+			updateUser(name, count);
+		});
+	
+	});
 }
 
 function updateUser(name, count) {
