@@ -34,6 +34,7 @@ var shake = function(name) {
 		}
 
 		$(this).gShake(function() {
+				alert('test');
 				count++;
 				countbox.innerHTML = count + ' shake!';
 				updateUser(name, count);	
