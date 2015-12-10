@@ -28,9 +28,9 @@ var shake = function(name) {
 		users.get(id, function(err, datum) {
 			if(err) {
 				window.location.reload();
-				errors.innerHTML = "Please login again.";
 				return;
 			}
+			count = datum.value.count;
 			
 			game.get('start', function(err, datum) {
 				if(!datum.value.flag) {
@@ -38,6 +38,7 @@ var shake = function(name) {
 					count = 0;
 					return;
 				} else {
+					if(count >= 30) count=0;
 					count++;
 					countbox.innerHTML = count + ' shake!';
 					updateUser(name, count);

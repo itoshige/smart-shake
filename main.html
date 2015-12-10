@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>SHAKE!</title>
+
+  <link rel="stylesheet" type="text/css" href="css/bootstrap-pc.min.css">
+  <style type="text/css">
+  body { padding-top: 80px; }
+  @media ( min-width: 768px ) {
+    #banner {
+      min-height: 300px;
+      border-bottom: none;
+    }
+    .bs-docs-section {
+      margin-top: 1em;
+    }
+    .bs-component {
+      position: relative;
+    }
+    .bs-component .modal {
+      position: relative;
+      top: auto;
+      right: auto;
+      left: auto;
+      bottom: auto;
+      z-index: 1;
+      display: block;
+    }
+    .bs-component .modal-dialog {
+      width: 90%;
+    }
+    .bs-component .popover {
+      position: relative;
+      display: inline-block;
+      width: 220px;
+      margin: 20px;
+    }
+    .nav-tabs {
+      margin-bottom: 15px;
+    }
+    .progress {
+      margin-bottom: 10px;
+    }
+  }
+  </style>
+
+  <!--[if lt IE 9]>
+    <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<body>
+
+<header>
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">SHAKE!</a>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav navbar-right">
+          <li id="startBtn">
+            <a href="#" role="button" aria-expanded="false" onClick="startGame();return false;">Start</a>
+          </li>
+          <li id="resetBtn"><a href="#" onClick="resetGame();return false;">Reset</a></li>
+          <li id="clearBtn"><a href="#" onClick="clearData();return false;">Clear</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- Tables
+  ================================================== -->
+  <div class="bs-docs-section">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="bs-component">
+          <div id="context"></div>
+        </div>
+
+        <div class="page-header">
+          <h3 id="tables">Entry Team</h3>
+        </div>
+
+        <div class="bs-component">
+          <table class="table table-striped table-hover ">
+            <thead>
+              <tr>
+                <th class="col-xs-3">Team name</th>
+                <th class="col-xs-8">Progress</th>
+                <th class="col-xs-1">Turn</th>
+              </tr>
+            </thead>
+            <tbody id="count">
+            </tbody>
+          </table>
+        </div><!-- /example -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script src="js/lib/jquery.js"></script>
+<script src="js/lib/bootstrap.min.js"></script>
+
+<script src='https://cdn.mlkcca.com/v2.0.0/milkcocoa.js'></script>
+<script src="js/main.js"></script>
+
+<script type="text/javascript">
+  $('.bs-component [data-toggle="popover"]').popover();
+  $('.bs-component [data-toggle="tooltip"]').tooltip();
+</script>
+
+</body>
+</html>

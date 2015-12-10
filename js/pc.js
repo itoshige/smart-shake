@@ -24,8 +24,13 @@ var display = function(id, name, count){
 	}
 	
 	var newelement = document.createElement('div');
-	newelement.id = id; 
-	newelement.innerHTML = "name: " + name + "  count : " + count;
+	newelement.id = id;
+	var nameelement = document.createElement('div');
+	nameelement.innerHTML =  "name: " + name;
+	var countelement = document.createElement('div');
+	countelement.innerHTML = " count: " + count;
+	newelement.appendChild(nameelement);
+	newelement.appendChild(countelement);
 	countbox.appendChild(newelement); 
 }
 
