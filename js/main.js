@@ -10,10 +10,12 @@ var max = 30;
 
 game.get('start', function(err, datum) {
 	display4wait();
+	disable4reset();
 	if(err) return;
 	
 	if(datum.value.flag) {
 		display4start();
+		disable4start();
 	}
 });
 
@@ -68,9 +70,10 @@ function resetGame() {
 	display4wait();
 	game.set('start', {'flag': false});
 	
-	var resetCount = function(id, name) {
+	var resetCount = function(id, name, count) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
+		users.set(id, {'name': name, 'count': 0});
 	}
 	exec4users(resetCount);
 }
@@ -90,7 +93,6 @@ function clearData() {
 var startBtn = document.getElementById('startBtn');
 var resetBtn = document.getElementById('resetBtn');
 var clearBtn = document.getElementById('clearBtn');
-disable4reset();
 
 function disable4reset() {
 	startBtn.className = "dropdown active";
