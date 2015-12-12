@@ -51,11 +51,14 @@ var shake = function(name) {
 							order = 1;
 							if(datum) order += datum.value.number;
 							game.set('order', {'number': order});
+							countbox.innerHTML = count + ' shake!';
+							updateUser(name, count, order);
 						});
+					} else {
+						count++;
+						countbox.innerHTML = count + ' shake!';
+						updateUser(name, count, order);
 					}
-					count++;
-					countbox.innerHTML = count + ' shake!';
-					updateUser(name, count, order);
 				}
 			});
 		});
