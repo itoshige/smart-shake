@@ -25,6 +25,9 @@ var display = function(id, name, count, order){
 	
 	if(existedTrElem) {
 		var existedProgress = document.getElementById('progress-' + id);
+		
+		if(count >= max) count = 0;
+		
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + count/max * 100 + '%;">' + count + '</div>';
 		
 		if(order > 0) {

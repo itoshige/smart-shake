@@ -62,7 +62,7 @@ var shake = function(name) {
 						order = nextcnt;
 						updateUser(name, count, order);
 						
-						nextorder.set('order', {'cnt': ++nextcnt});
+						nextorder.set('nextorder', {'cnt': ++nextcnt});
 						//count=0;
 					});
 				}
