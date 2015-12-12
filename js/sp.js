@@ -10,6 +10,7 @@ var game = milkcocoa.dataStore('shake/game');
 var id = (window.localStorage.getItem('id')) ? window.localStorage.getItem('id') : getRandomID();
 window.localStorage.setItem('id', id);
 
+var max = 20;
 var name = "";
 var count = 0;
 var order = 0;
@@ -44,7 +45,7 @@ var shake = function(name) {
 					order = 0;
 					return;
 				} else {
-					if(count >= 30) {
+					if(count >= max) {
 						count=0;
 						game.get('order', function(err, datum) {
 							order = 1;

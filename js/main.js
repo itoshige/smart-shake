@@ -6,7 +6,7 @@ var game = milkcocoa.dataStore('shake/game');
 
 var countbox = document.getElementById('count');
 
-var max = 30;
+var max = 20;
 
 game.get('start', function(err, datum) {
 	display4wait();
@@ -21,7 +21,7 @@ game.get('start', function(err, datum) {
 
 var display = function(id, name, count, order){
 	var existedTrElem = document.getElementById(id);
-	if(count >= 30) {
+	if(count >= max) {
 		count = 0;
 		existedAnsElem = document.getElementById('answer-' + id);
 		existedAnsElem.innerHTML = '<span class="badge">' + order + '</span>';
