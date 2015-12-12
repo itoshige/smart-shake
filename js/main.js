@@ -19,12 +19,12 @@ game.get('start', function(err, datum) {
 	}
 });
 
-var display = function(id, name, count){
+var display = function(id, name, count, order){
 	var existedTrElem = document.getElementById(id);
 	if(count >= 30) {
 		count = 0;
 		existedAnsElem = document.getElementById('answer-' + id);
-		existedAnsElem.innerHTML = '<span class="badge">1</span>';
+		existedAnsElem.innerHTML = '<span class="badge">' + order + '</span>';
 	}
 	
 	if(existedTrElem) {
@@ -66,9 +66,7 @@ function startGame() {
 }
 
 function resetGame() {
-	disable4reset();
-	display4wait();
-	game.set('start', {'flag': false});
+	resetData();
 	
 	var resetCount = function(id, name, count) {
 		var existedProgress = document.getElementById('progress-' + id);
@@ -79,15 +77,20 @@ function resetGame() {
 }
 
 function clearData() {
-	disable4reset();
-	display4wait();
+	resetData();
 	countbox.innerHTML = "";
-	game.set('start', {'flag': false});
 	
 	var removeUsers = function(id) {
 		users.remove(id);
 	}
 	exec4users(removeUsers);
+}
+
+function resetData() {
+	disable4reset();
+	display4wait();
+	game.set('start', {'flag': false});
+	game.set('order', {'number': 0});
 }
 
 var startBtn = document.getElementById('startBtn');
@@ -125,5 +128,5 @@ function exec4users(func) {
 }
 
 function display4userset(sent) {
-	display(sent.id, sent.value.name, sent.value.count);
+	display(sent.id, sent.value.name, sent.value.count, sent.value.order);
 }

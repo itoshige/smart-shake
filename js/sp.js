@@ -9,8 +9,11 @@ var game = milkcocoa.dataStore('shake/game');
 
 var id = (window.localStorage.getItem('id')) ? window.localStorage.getItem('id') : getRandomID();
 window.localStorage.setItem('id', id);
-var count = 0;
+
 var name = "";
+var count = 0;
+var order = 0;
+
 users.get(id, function(err, datum) {
 	if(err) return;
 	
@@ -19,6 +22,7 @@ users.get(id, function(err, datum) {
 	
 	name = uname;
 	count = datum.value.count;
+	order = datum.value.order;
 	entryGame();
 });
 
@@ -31,25 +35,34 @@ var shake = function(name) {
 				return;
 			}
 			count = datum.value.count;
+			order = datum.value.order;
 			
 			game.get('start', function(err, datum) {
 				if(!datum.value.flag) {
 					countbox.innerHTML = 'Waiting for start.';
 					count = 0;
+					order = 0;
 					return;
 				} else {
-					if(count >= 30) count=0;
+					if(count >= 30) {
+						count=0;
+						game.get('order', function(err, datum) {
+							order = 1;
+							if(datum) order += datum.value.number;
+							game.set('order', {'number': order});
+						});
+					}
 					count++;
 					countbox.innerHTML = count + ' shake!';
-					updateUser(name, count);
+					updateUser(name, count, order);
 				}
 			});
 		});
 	});
 }
 
-function updateUser(name, count) {
-	users.set(id, {'name': name, 'count': count});
+function updateUser(name, count, order) {
+	users.set(id, {'name': name, 'count': count, 'order': order});
 }
 
 function entry() {
@@ -62,7 +75,12 @@ function entryGame(){
 		errors.innerHTML = "Please input your team name.";
 		return;
 	}
-
+	
+	if(name.length > 10) {
+		errors.innerHTML = "Please enter your name in 10 characters or less.";
+		return;
+	}
+	
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
 		    if(data[i].value.name === name && data[i].id !== id) {
@@ -71,7 +89,7 @@ function entryGame(){
 		    }
 		}
 		
-		loginform.innerHTML = "<h5>Your name : " + name + "</h5>";
+		loginform.innerHTML = "<h5>" + name + "</h5>";
 
 		game.get('start', function(err, datum) {
 			countbox.innerHTML = 'Waiting for start.';
@@ -79,7 +97,7 @@ function entryGame(){
 			
 			game.on('set', startgame);
 			
-			updateUser(name, count);
+			updateUser(name, count, order);
 			startgame(datum);
 		});
 	});
