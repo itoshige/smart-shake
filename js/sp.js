@@ -56,10 +56,9 @@ var shake = function(name) {
 						gameorder = datum.value.number;
 						countbox.innerHTML = 'Please answer.';
 
-						if(order >= gameorder) return;
+						if(count >= max) return;
 						
-						order = gameorder + 1;
-						alert(order);
+						order = ++gameorder;
 						updateUser(name, count, order);
 						
 						game.set('order', {'number': order});

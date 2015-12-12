@@ -29,6 +29,8 @@ var display = function(id, name, count, order){
 	if(existedTrElem) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + count/max * 100 + '%;">' + count + '</div>';
+		var existedAnswer = document.getElementById('answer-' + id);
+		existedAnswer.innerHTML = order;
 		return;
 	}
 	
@@ -94,7 +96,7 @@ function resetData() {
 	disable4reset();
 	display4wait();
 	game.set('start', {'flag': false});
-	game.set('order', {'number': 0});
+	game.set('order', {'number': 1});
 }
 
 var startBtn = document.getElementById('startBtn');
