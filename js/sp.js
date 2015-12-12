@@ -47,12 +47,12 @@ var shake = function(name) {
 				} else {
 					count++;
 					if(count >= max) {
-						count=0;
 						game.get('order', function(err, datum) {
 							order = datum.value.number;
 							game.set('order', {'number': order});
 							countbox.innerHTML = count + ' shake!';
 							updateUser(name, count, order);
+							count=0;
 						});
 					} else {
 						countbox.innerHTML = count + ' shake!';
