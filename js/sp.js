@@ -58,11 +58,10 @@ var shake = function(name) {
 						gameorder = datum.value.number;
 						countbox.innerHTML = 'Please answer.';
 						
-						order = ++gameorder;
-						alert(order);
+						order = gameorder;
 						updateUser(name, count, order);
 						
-						game.set('order', {'number': order});
+						game.set('order', {'number': ++gameorder});
 						//count=0;
 					});
 				}
