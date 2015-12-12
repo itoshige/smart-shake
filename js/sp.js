@@ -57,9 +57,10 @@ var shake = function(name) {
 						if(order >= gameorder) return;
 						
 						countbox.innerHTML = 'Please answer.';
-						updateUser(name, count, gameorder);
+						updateUser(name, count, ++gameorder);
+						order = gameorder;
 						
-						game.set('order', {'number': ++gameorder});
+						game.set('order', {'number': gameorder});
 						//count=0;
 					});
 				}

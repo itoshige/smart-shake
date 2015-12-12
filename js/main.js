@@ -23,7 +23,7 @@ var display = function(id, name, count, order){
 	var existedTrElem = document.getElementById(id);
 	if(existedTrElem && count >= max) {
 		existedAnsElem = document.getElementById('answer-' + id);
-		existedAnsElem.innerHTML = '<span class="badge">' + order + '</span>';
+		existedAnsElem.innerHTML = order;
 	}
 	
 	if(existedTrElem) {
@@ -47,7 +47,10 @@ var display = function(id, name, count, order){
 	progressElem.appendChild(progressDiv);
 	
 	var answerElem = document.createElement('td');
-	answerElem.id = 'answer-' + id;
+	var answerSpanElem = document.createElement('span');
+	answerSpanElem.id = 'answer-' + id;
+	answerSpanElem.className = 'badge';
+	answerElem.appendChild(answerSpanElem);
 	
 	trElem.appendChild(nameElem);
 	trElem.appendChild(progressElem);
@@ -70,7 +73,7 @@ function resetGame() {
 	var resetCount = function(id, name, count) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
-		var existedAnswer = document.getElementById('anser-' + id);
+		var existedAnswer = document.getElementById('answer-' + id);
 		existedAnswer.innerHTML = "";
 		users.set(id, {'name': name, 'count': 0, 'order': 0});
 	}
@@ -91,7 +94,7 @@ function resetData() {
 	disable4reset();
 	display4wait();
 	game.set('start', {'flag': false});
-	game.set('order', {'number': 1});
+	game.set('order', {'number': 0});
 }
 
 var startBtn = document.getElementById('startBtn');
