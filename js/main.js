@@ -3,7 +3,7 @@ var users = milkcocoa.dataStore('shake/users');
 users.on('set', display4userset);
 
 var game = milkcocoa.dataStore('shake/game');
-var order = milkcocoa.dataStore('shake/order');
+var nextorder = milkcocoa.dataStore('shake/nextorder');
 
 var countbox = document.getElementById('count');
 
@@ -101,7 +101,7 @@ function resetData() {
 	disable4reset();
 	display4wait();
 	game.set('start', {'flag': false});
-	order.set('order', {'nextcnt': 1});
+	nextorder.set('nextorder', {'cnt': 1});
 }
 
 var startBtn = document.getElementById('startBtn');

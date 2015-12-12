@@ -6,7 +6,7 @@ var loginform = document.getElementById('context');
 var errors = document.getElementById('error');
 
 var game = milkcocoa.dataStore('shake/game');
-var order = milkcocoa.dataStore('shake/order');
+var nextorder = milkcocoa.dataStore('shake/nextorder');
 
 var id = (window.localStorage.getItem('id')) ? window.localStorage.getItem('id') : getRandomID();
 window.localStorage.setItem('id', id);
@@ -55,18 +55,14 @@ var shake = function(name) {
 						return;
 					}
 					
-					alert("test");
-					
-					order.get('order', function(err, datum) {
-						alert("err:" + err);
+\					nextorder.get('nextorder', function(err, datum) {
 						var nextcnt = datum.value.nextcnt;
-						alert("nextcnt:" + nextcnt);
 						countbox.innerHTML = 'Please answer.';
 						
 						order = nextcnt;
 						updateUser(name, count, order);
 						
-						order.set('order', {'nextcnt': ++nextcnt});
+						nextorder.set('order', {'cnt': ++nextcnt});
 						//count=0;
 					});
 				}
