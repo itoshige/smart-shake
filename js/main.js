@@ -3,6 +3,7 @@ var users = milkcocoa.dataStore('shake/users');
 users.on('set', display4userset);
 
 var game = milkcocoa.dataStore('shake/game');
+var order = milkcocoa.dataStore('shake/order');
 
 var countbox = document.getElementById('count');
 
