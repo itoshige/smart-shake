@@ -55,7 +55,7 @@ var shake = function(name) {
 						return;
 					}
 					
-\					nextorder.get('nextorder', function(err, datum) {
+					nextorder.get('nextorder', function(err, datum) {
 						var nextcnt = datum.value.nextcnt;
 						countbox.innerHTML = 'Please answer.';
 						
