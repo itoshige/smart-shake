@@ -101,7 +101,7 @@ function entryGame(){
 		loginform.innerHTML = "<h5>" + name + "</h5>";
 
 		game.get('start', function(err, datum) {
-			countbox.innerHTML = 'Waiting for start.';
+			countbox.innerHTML = 'Waiting for start2.';
 			if(err) return;
 			
 			game.on('set', startgame);
@@ -118,7 +118,7 @@ function startgame(set) {
 
 function displaySP(start, name) {
 	if(!start) {
-		countbox.innerHTML = 'Waiting for start.';
+		countbox.innerHTML = 'Waiting for start3.';
 		return;
 	}
 	countbox.innerHTML = count + ' shake!';
