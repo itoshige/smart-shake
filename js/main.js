@@ -22,10 +22,6 @@ game.get('start', function(err, datum) {
 
 var display = function(id, name, count, order){
 	var existedTrElem = document.getElementById(id);
-	if(existedTrElem && count >= max) {
-		existedAnsElem = document.getElementById('answer-' + id);
-		existedAnsElem.innerHTML = order;
-	}
 	
 	if(existedTrElem) {
 		var existedProgress = document.getElementById('progress-' + id);
