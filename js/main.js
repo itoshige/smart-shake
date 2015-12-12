@@ -21,7 +21,7 @@ game.get('start', function(err, datum) {
 
 var display = function(id, name, count, order){
 	var existedTrElem = document.getElementById(id);
-	if(count >= max) {
+	if(existedTrElem && count >= max) {
 		count = 0;
 		existedAnsElem = document.getElementById('answer-' + id);
 		existedAnsElem.innerHTML = '<span class="badge">' + order + '</span>';
@@ -71,7 +71,7 @@ function resetGame() {
 	var resetCount = function(id, name, count) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
-		users.set(id, {'name': name, 'count': 0});
+		users.set(id, {'name': name, 'count': 0, 'order': 0});
 	}
 	exec4users(resetCount);
 }
@@ -90,7 +90,7 @@ function resetData() {
 	disable4reset();
 	display4wait();
 	game.set('start', {'flag': false});
-	game.set('order', {'number': 0});
+	game.set('order', {'number': 1});
 }
 
 var startBtn = document.getElementById('startBtn');
@@ -98,14 +98,14 @@ var resetBtn = document.getElementById('resetBtn');
 var clearBtn = document.getElementById('clearBtn');
 
 function disable4reset() {
-	startBtn.className = "dropdown active";
-	resetBtn.className = "disabled";
-	clearBtn.className = "disabled";
+	startBtn.className = "btn btn-primary";
+	resetBtn.className = "btn btn-default disabled";
+	clearBtn.className = "btn btn-warning disabled";
 }
 function disable4start() {
-	startBtn.className = "disabled";
-	resetBtn.className = "dropdown active";
-	clearBtn.className = "dropdown active";
+	startBtn.className = "btn btn-primary disabled";
+	resetBtn.className = "btn btn-default";
+	clearBtn.className = "btn btn-warning";
 }
 
 var context = document.getElementById('context');

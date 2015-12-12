@@ -45,17 +45,16 @@ var shake = function(name) {
 					order = 0;
 					return;
 				} else {
+					count++;
 					if(count >= max) {
 						count=0;
 						game.get('order', function(err, datum) {
-							order = 1;
-							if(datum) order += datum.value.number;
+							order = datum.value.number;
 							game.set('order', {'number': order});
 							countbox.innerHTML = count + ' shake!';
 							updateUser(name, count, order);
 						});
 					} else {
-						count++;
 						countbox.innerHTML = count + ' shake!';
 						updateUser(name, count, order);
 					}
