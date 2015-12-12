@@ -45,21 +45,19 @@ var shake = function(name) {
 					order = 0;
 					return;
 				} else {
+					if(count >= max) return;
+					
 					if(count < max) {
 						count++;
 						countbox.innerHTML = count + ' shake!';
 						updateUser(name, count, order);
-						return;
 					}
 					
 					game.get('order', function(err, datum) {
 						gameorder = datum.value.number;
 						countbox.innerHTML = 'Please answer.';
-
-						if(count > max) return;
 						
 						order = ++gameorder;
-						alert(order);
 						updateUser(name, count, order);
 						
 						game.set('order', {'number': order});
