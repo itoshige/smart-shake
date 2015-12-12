@@ -22,7 +22,6 @@ game.get('start', function(err, datum) {
 var display = function(id, name, count, order){
 	var existedTrElem = document.getElementById(id);
 	if(existedTrElem && count >= max) {
-		count = 0;
 		existedAnsElem = document.getElementById('answer-' + id);
 		existedAnsElem.innerHTML = '<span class="badge">' + order + '</span>';
 	}
@@ -71,6 +70,8 @@ function resetGame() {
 	var resetCount = function(id, name, count) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
+		var existedAnswer = document.getElementById('anser-' + id);
+		existedAnswer.innerHTML = "";
 		users.set(id, {'name': name, 'count': 0, 'order': 0});
 	}
 	exec4users(resetCount);

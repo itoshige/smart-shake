@@ -45,19 +45,23 @@ var shake = function(name) {
 					order = 0;
 					return;
 				} else {
-					count++;
-					if(count >= max) {
-						game.get('order', function(err, datum) {
-							order = datum.value.number;
-							game.set('order', {'number': order});
-							countbox.innerHTML = count + ' shake!';
-							updateUser(name, count, order);
-							count=0;
-						});
-					} else {
+					if(count < max) {
+						count++;
 						countbox.innerHTML = count + ' shake!';
 						updateUser(name, count, order);
+						return;
 					}
+					
+					game.get('order', function(err, datum) {
+						gameorder = datum.value.number;
+						if(order >= gameorder) return;
+						
+						countbox.innerHTML = 'Please answer.';
+						updateUser(name, count, gameorder);
+						
+						game.set('order', {'number': ++gameorder});
+						//count=0;
+					});
 				}
 			});
 		});
