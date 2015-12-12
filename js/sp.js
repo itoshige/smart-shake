@@ -59,6 +59,7 @@ var shake = function(name) {
 						if(order >= gameorder) return;
 						
 						order = gameorder + 1;
+						alert(order);
 						updateUser(name, count, order);
 						
 						game.set('order', {'number': order});
