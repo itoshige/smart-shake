@@ -119,7 +119,7 @@ function startgame(set) {
 
 function displaySP(start, name) {
 	if(!start) {
-		countbox.innerHTML = 'Waiting for start3.';
+		countbox.innerHTML = 'Waiting for start.';
 		return;
 	}
 	countbox.innerHTML = count + ' shake!';

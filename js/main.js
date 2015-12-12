@@ -101,7 +101,7 @@ function resetData() {
 	disable4reset();
 	display4wait();
 	game.set('start', {'flag': false});
-	game.set('order', {'number': 1});
+	order.set('order', {'nextcnt': 1});
 }
 
 var startBtn = document.getElementById('startBtn');
