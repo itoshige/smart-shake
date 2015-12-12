@@ -54,13 +54,14 @@ var shake = function(name) {
 					
 					game.get('order', function(err, datum) {
 						gameorder = datum.value.number;
+						countbox.innerHTML = 'Please answer.';
+
 						if(order >= gameorder) return;
 						
-						countbox.innerHTML = 'Please answer.';
-						updateUser(name, count, ++gameorder);
-						order = gameorder;
+						order = gameorder + 1;
+						updateUser(name, count, order);
 						
-						game.set('order', {'number': gameorder});
+						game.set('order', {'number': order});
 						//count=0;
 					});
 				}
