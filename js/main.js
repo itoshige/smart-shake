@@ -1,8 +1,6 @@
 var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var users = milkcocoa.dataStore('shake/users');
 users.on('set', display4userset);
-
-var usersorder = milkcocoa.dataStore('shake/usersorder');
 var userspoint = milkcocoa.dataStore('shake/userspoint');
 
 var game = milkcocoa.dataStore('shake/game');
@@ -59,14 +57,13 @@ var display = function(id, name, count, order, point){
 								
 								if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
 								
-								usersorder.set(id, {'order': order});
-								userspoint.set(id, {'point': totalpoint});
 								//users.set(id, {'name': name, 'count': count, 'order': order, 'point': totalpoint});
+								userspoint.set(id, {'point': totalpoint});
 							});
 						}, false);
 				}, false);
 				
-			existedProgress.appendChild(a);
+				existedProgress.appendChild(a);
 		} else {
 			progressDiv.style.width = count/max * 100 + '%';
 			progressDiv.innerHTML = count;
@@ -114,14 +111,14 @@ var display = function(id, name, count, order, point){
 							a.innerHTML = "correct!";
 							
 							if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
-							usersorder.set(id, {'order': order});
+							
+							//updateUser(id, name, count, order, totalpoint);
 							userspoint.set(id, {'point': totalpoint});
-							//users.set(id, {'name': name, 'count': count, 'order': order, 'point': totalpoint});
 						});
 					}, false);
 			}, false);
 			
-		progressDiv.appendChild(a);
+			progressDiv.appendChild(a);
 	} else {
 		progressDiv.style.width = count/max * 100 + '%';
 		progressDiv.innerHTML = count;
@@ -153,11 +150,11 @@ function resetGame() {
 	
 	var resetCount = function(id, name, count, point) {
 		var existedProgress = document.getElementById('progress-' + id);
-		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
-		//users.set(id, {'name': name, 'count': 0, 'order': 0, 'point': point});
-		users.set(id, {'name': name, 'count': 0});
-		usersorder.set(id, {'order': 0});
-		userspoint.set(id, {'point': point});
+		existedProgress.style.width = '0%';
+		existedProgress.innerHTML = 0;
+
+		//existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
+		updateUser(id, name, 0, 0, point);
 	}
 	exec4users(resetCount);
 }
@@ -195,8 +192,9 @@ function disable4start() {
 	clearBtn.className = "btn btn-warning";
 }
 
-function correct(id) {
-	
+function updateUser(id, name, count, order, point) {
+	users.set(id, {'name': name, 'count': 0, 'order': 0, 'point': point});
+	userspoint.set(id, {'point': point});
 }
 
 var context = document.getElementById('context');
@@ -213,18 +211,7 @@ function display4start() {
 function exec4users(func) {
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-			var id = data[i].id;
-			var name = data[i].value.name;
-			var count = data[i].value.count;
-			usersorder.get(id, function(err, datum) {
-				var order = 0;
-				if(!err) order = datum.value.order;
-				userspoint.get(id, function(err, datum) {
-					var point = 0;
-					if(!err) point = datum.value.point;
-					func(id, name, count, order, point);
-				});
-			});
+		    func(data[i].id, data[i].value.name, data[i].value.count, data[i].value.order, data[i].value.point);
 		}
 	});
 }
