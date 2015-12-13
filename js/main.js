@@ -65,8 +65,8 @@ var display = function(id, name, count, order, point){
 				
 				existedProgress.appendChild(a);
 		} else {
-			progressDiv.style.width = count/max * 100 + '%';
-			progressDiv.innerHTML = count;
+			existedProgress.style.width = count/max * 100 + '%';
+			existedProgress.innerHTML = count;
 		}
 		
 		return;
@@ -152,7 +152,7 @@ function resetGame() {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.style.width = '0%';
 		existedProgress.innerHTML = 0;
-
+		
 		//existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
 		updateUser(id, name, 0, 0, point);
 	}
