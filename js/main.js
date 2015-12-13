@@ -68,12 +68,13 @@ var display = function(id, name, count, order, point){
 							});
 							correct.removeEventListener("click", arguments.callee, false);
 						}, false);
+					var incorrect = document.getElementById('incorrect');
+					incorrect.addEventListener('click', function() {
+							users.set(id, {'name': name, 'count': 0, 'order': 0});
+							incorrect.removeEventListener("click", arguments.callee, false);
+						}, false);
+				link.removeEventListener("click", arguments.callee, false);
 				}, false);
-				
-				//existedProgress.appendChild(a);
-		} else {
-			//existedProgress.style.width = count/max * 100 + '%';
-			//existedProgress.innerHTML = count;
 		}
 		
 		return;
@@ -145,10 +146,14 @@ var display = function(id, name, count, order, point){
 						});
 						correct.removeEventListener("click", arguments.callee, false);
 					}, false);
+				
+				var incorrect = document.getElementById('incorrect');
+				incorrect.addEventListener('click', function() {
+						users.set(id, {'name': name, 'count': 0, 'order': 0});
+						incorrect.removeEventListener("click", arguments.callee, false);
+					}, false);
+			link.removeEventListener("click", arguments.callee, false);
 			}, false);
-	} else {
-		//progressDiv.style.width = count/max * 100 + '%';
-		//progressDiv.innerHTML = count;
 	}
 }
 
