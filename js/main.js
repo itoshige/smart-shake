@@ -27,18 +27,20 @@ var display = function(id, name, count, order, point){
 	
 	if(existedTrElem) {
 		var existedProgress = document.getElementById('progress-' + id);
+		existedProgress.className = "progress progress-bar";
+		existedProgress.style.width = count/max * 100 + '%';
+		var link = document.getElementById("a-" + id);
+		link.innerHTML = count;
 		
 		if(count >= max) {
 			existedProgress.className = "progress-bar progress-bar-success";
 			existedProgress.style.width = '100%';
 			
-			var a = document.createElement('a');
-			a.href = "#modal";
-			a.style.color = "white";
-			a.id = "a-" + id;
-			a.innerHTML = order;
+			var link = document.getElementById("a-" + id);
+			link.href = "#modal";
+			link.innerHTML = order;
 			
-			a.addEventListener('click', function() {
+			link.addEventListener('click', function() {
 					var correct = document.getElementById('correct');
 					correct.addEventListener('click', function() {
 							var givenPoint = document.getElementById('point-' + id);
@@ -46,27 +48,32 @@ var display = function(id, name, count, order, point){
 							
 							nextpoints.get('nextpoints', function(err, datum) {
 								var getpoint = datum.value.cnt;
-								var totalpoint = point + getpoint;
-								givenPoint.innerHTML = totalpoint;
-								
-								var div = document.getElementById('progress-' + id);
-								div.className = "progress progress-striped active";
-								
-								var a = document.getElementById('a-' + id);
-								a.innerHTML = "correct!";
-								
-								if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
-								
-								//users.set(id, {'name': name, 'count': count, 'order': order, 'point': totalpoint});
-								userspoint.set(id, {'point': totalpoint});
+									
+								userspoint.get(id, function(err, datum) {
+									var point = datum.value.point;
+									var totalpoint = point + getpoint;
+									givenPoint.innerHTML = totalpoint;
+									
+									var div = document.getElementById('progress-' + id);
+									div.className = "progress progress-bar progress-bar-success progress-striped active";
+									
+									var a = document.getElementById('a-' + id);
+									a.innerHTML = "correct!";
+									
+									if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
+									
+									//updateUser(id, name, count, order, totalpoint);
+									userspoint.set(id, {'point': totalpoint});
+								});
 							});
+							correct.removeEventListener("click", arguments.callee, false);
 						}, false);
 				}, false);
 				
-				existedProgress.appendChild(a);
+				//existedProgress.appendChild(a);
 		} else {
-			existedProgress.style.width = count/max * 100 + '%';
-			existedProgress.innerHTML = count;
+			//existedProgress.style.width = count/max * 100 + '%';
+			//existedProgress.innerHTML = count;
 		}
 		
 		return;
@@ -83,48 +90,15 @@ var display = function(id, name, count, order, point){
 	var progressDiv = document.createElement('div');
 	progressDiv.className = "progress progress-bar";
 	progressDiv.id = "progress-" + id;
-	if(count >= max) {
-		progressDiv.className = "progress progress-bar progress-bar-success";
-		progressDiv.style.width = '100%';
-		
-		var a = document.createElement('a');
-		a.href = "#modal";
-		a.style.color = "white";
-		a.id = "a-" + id;
-		a.innerHTML = order;
-		
-		a.addEventListener('click', function() {
-				var correct = document.getElementById('correct');
-				correct.addEventListener('click', function() {
-						var givenPoint = document.getElementById('point-' + id);
-						givenPoint.className = "badge";
-						
-						nextpoints.get('nextpoints', function(err, datum) {
-							var getpoint = datum.value.cnt;
-							var totalpoint = point + getpoint;
-							givenPoint.innerHTML = totalpoint;
-							
-							var div = document.getElementById('progress-' + id);
-							div.className = "progress progress-striped active";
-							
-							var a = document.getElementById('a-' + id);
-							a.innerHTML = "correct!";
-							
-							if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
-							
-							//updateUser(id, name, count, order, totalpoint);
-							userspoint.set(id, {'point': totalpoint});
-						});
-					}, false);
-			}, false);
-			
-			progressDiv.appendChild(a);
-	} else {
-		progressDiv.style.width = count/max * 100 + '%';
-		progressDiv.innerHTML = count;
-	}
-	progressElem.appendChild(progressDiv);
+	progressDiv.style.width = count/max * 100 + '%';
 	
+	var a = document.createElement('a');
+	a.style.color = "white";
+	a.id = "a-" + id;
+	a.innerHTML = count;
+	progressDiv.appendChild(a);
+	progressElem.appendChild(progressDiv);
+
 	var pointElem = document.createElement('td');
 	var pointSpan = document.createElement('span');
 	pointSpan.id = 'point-' + id;
@@ -134,6 +108,48 @@ var display = function(id, name, count, order, point){
 	trElem.appendChild(progressElem);
 	trElem.appendChild(pointElem);
 	countbox.appendChild(trElem); 
+
+	if(count >= max) {
+		progressDiv.className = "progress progress-bar progress-bar-success";
+		progressDiv.style.width = '100%';
+		
+		var link = document.getElementById("a-" + id);
+		link.href = "#modal";
+		link.innerHTML = order;
+		
+		link.addEventListener('click', function() {
+				var correct = document.getElementById('correct');
+				correct.addEventListener('click', function() {
+						var givenPoint = document.getElementById('point-' + id);
+						givenPoint.className = "badge";
+						
+						nextpoints.get('nextpoints', function(err, datum) {
+							var getpoint = datum.value.cnt;
+							
+							userspoint.get(id, function(err, datum) {
+								var point = datum.value.point;
+								var totalpoint = point + getpoint;
+								givenPoint.innerHTML = totalpoint;
+								
+								var div = document.getElementById('progress-' + id);
+								div.className = "progress progress-bar progress-bar-success progress-striped active";
+								
+								var a = document.getElementById('a-' + id);
+								a.innerHTML = "correct!";
+								
+								if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
+								
+								//updateUser(id, name, count, order, totalpoint);
+								userspoint.set(id, {'point': totalpoint});
+							});
+						});
+						correct.removeEventListener("click", arguments.callee, false);
+					}, false);
+			}, false);
+	} else {
+		//progressDiv.style.width = count/max * 100 + '%';
+		//progressDiv.innerHTML = count;
+	}
 }
 
 
@@ -148,13 +164,16 @@ function startGame() {
 function resetGame() {
 	resetData();
 	
-	var resetCount = function(id, name, count, point) {
+	var resetCount = function(id, name, count) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.style.width = '0%';
-		existedProgress.innerHTML = 0;
+		var link = document.getElementById("a-" + id);
+		link.innerHTML = 0;
 		
-		//existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
-		updateUser(id, name, 0, 0, point);
+		userspoint.get(id, function(err, datum) {
+			var point = datum.value.point;
+			updateUser(id, name, 0, 0, point);
+		});
 	}
 	exec4users(resetCount);
 }
@@ -193,7 +212,7 @@ function disable4start() {
 }
 
 function updateUser(id, name, count, order, point) {
-	users.set(id, {'name': name, 'count': 0, 'order': 0, 'point': point});
+	users.set(id, {'name': name, 'count': 0, 'order': 0});
 	userspoint.set(id, {'point': point});
 }
 
@@ -211,7 +230,7 @@ function display4start() {
 function exec4users(func) {
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-		    func(data[i].id, data[i].value.name, data[i].value.count, data[i].value.order, data[i].value.point);
+		    func(data[i].id, data[i].value.name, data[i].value.count, data[i].value.order);
 		}
 	});
 }
