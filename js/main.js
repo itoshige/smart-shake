@@ -2,8 +2,12 @@ var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var users = milkcocoa.dataStore('shake/users');
 users.on('set', display4userset);
 
+var usersorder = milkcocoa.dataStore('shake/usersorder');
+var userspoint = milkcocoa.dataStore('shake/userspoint');
+
 var game = milkcocoa.dataStore('shake/game');
 var nextorder = milkcocoa.dataStore('shake/nextorder');
+var nextpoints = milkcocoa.dataStore('shake/nextpoints');
 
 var countbox = document.getElementById('count');
 
@@ -20,19 +24,52 @@ game.get('start', function(err, datum) {
 	}
 });
 
-var display = function(id, name, count, order){
+var display = function(id, name, count, order, point){
 	var existedTrElem = document.getElementById(id);
 	
 	if(existedTrElem) {
 		var existedProgress = document.getElementById('progress-' + id);
 		
-		if(count >= max) count = 0;
-		
-		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + count/max * 100 + '%;">' + count + '</div>';
-		
-		if(order > 0) {
-			var existedAnswer = document.getElementById('answer-' + id);
-			existedAnswer.innerHTML = order;
+		if(count >= max) {
+			existedProgress.className = "progress-bar progress-bar-success";
+			existedProgress.style.width = '100%';
+			
+			var a = document.createElement('a');
+			a.href = "#modal";
+			a.style.color = "white";
+			a.id = "a-" + id;
+			a.innerHTML = order;
+			
+			a.addEventListener('click', function() {
+					var correct = document.getElementById('correct');
+					correct.addEventListener('click', function() {
+							var givenPoint = document.getElementById('point-' + id);
+							givenPoint.className = "badge";
+							
+							nextpoints.get('nextpoints', function(err, datum) {
+								var getpoint = datum.value.cnt;
+								var totalpoint = point + getpoint;
+								givenPoint.innerHTML = totalpoint;
+								
+								var div = document.getElementById('progress-' + id);
+								div.className = "progress progress-striped active";
+								
+								var a = document.getElementById('a-' + id);
+								a.innerHTML = "correct!";
+								
+								if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
+								
+								usersorder.set(id, {'order': order});
+								userspoint.set(id, {'point': totalpoint});
+								//users.set(id, {'name': name, 'count': count, 'order': order, 'point': totalpoint});
+							});
+						}, false);
+				}, false);
+				
+			existedProgress.appendChild(a);
+		} else {
+			progressDiv.style.width = count/max * 100 + '%';
+			progressDiv.innerHTML = count;
 		}
 		
 		return;
@@ -47,20 +84,58 @@ var display = function(id, name, count, order){
 	
 	var progressElem = document.createElement('td');
 	var progressDiv = document.createElement('div');
-	progressDiv.className = "progress";
+	progressDiv.className = "progress progress-bar";
 	progressDiv.id = "progress-" + id;
-	progressDiv.innerHTML = '<div class="progress-bar" style="width: ' + count/max * 100 + '%;">' + count + '</div>';
+	if(count >= max) {
+		progressDiv.className = "progress progress-bar progress-bar-success";
+		progressDiv.style.width = '100%';
+		
+		var a = document.createElement('a');
+		a.href = "#modal";
+		a.style.color = "white";
+		a.id = "a-" + id;
+		a.innerHTML = order;
+		
+		a.addEventListener('click', function() {
+				var correct = document.getElementById('correct');
+				correct.addEventListener('click', function() {
+						var givenPoint = document.getElementById('point-' + id);
+						givenPoint.className = "badge";
+						
+						nextpoints.get('nextpoints', function(err, datum) {
+							var getpoint = datum.value.cnt;
+							var totalpoint = point + getpoint;
+							givenPoint.innerHTML = totalpoint;
+							
+							var div = document.getElementById('progress-' + id);
+							div.className = "progress progress-striped active";
+							
+							var a = document.getElementById('a-' + id);
+							a.innerHTML = "correct!";
+							
+							if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
+							usersorder.set(id, {'order': order});
+							userspoint.set(id, {'point': totalpoint});
+							//users.set(id, {'name': name, 'count': count, 'order': order, 'point': totalpoint});
+						});
+					}, false);
+			}, false);
+			
+		progressDiv.appendChild(a);
+	} else {
+		progressDiv.style.width = count/max * 100 + '%';
+		progressDiv.innerHTML = count;
+	}
 	progressElem.appendChild(progressDiv);
 	
-	var answerElem = document.createElement('td');
-	var answerSpanElem = document.createElement('span');
-	answerSpanElem.id = 'answer-' + id;
-	answerSpanElem.className = 'badge';
-	answerElem.appendChild(answerSpanElem);
+	var pointElem = document.createElement('td');
+	var pointSpan = document.createElement('span');
+	pointSpan.id = 'point-' + id;
+	pointElem.appendChild(pointSpan);
 	
 	trElem.appendChild(nameElem);
 	trElem.appendChild(progressElem);
-	trElem.appendChild(answerElem);
+	trElem.appendChild(pointElem);
 	countbox.appendChild(trElem); 
 }
 
@@ -76,12 +151,13 @@ function startGame() {
 function resetGame() {
 	resetData();
 	
-	var resetCount = function(id, name, count) {
+	var resetCount = function(id, name, count, point) {
 		var existedProgress = document.getElementById('progress-' + id);
 		existedProgress.innerHTML = '<div class="progress-bar" style="width: ' + 0 + '%;">0</div>';
-		var existedAnswer = document.getElementById('answer-' + id);
-		existedAnswer.innerHTML = "";
-		users.set(id, {'name': name, 'count': 0, 'order': 0});
+		//users.set(id, {'name': name, 'count': 0, 'order': 0, 'point': point});
+		users.set(id, {'name': name, 'count': 0});
+		usersorder.set(id, {'order': 0});
+		userspoint.set(id, {'point': point});
 	}
 	exec4users(resetCount);
 }
@@ -101,6 +177,7 @@ function resetData() {
 	display4wait();
 	game.set('start', {'flag': false});
 	nextorder.set('nextorder', {'cnt': 1});
+	nextpoints.set('nextpoints', {'cnt': 3});
 }
 
 var startBtn = document.getElementById('startBtn');
@@ -118,6 +195,10 @@ function disable4start() {
 	clearBtn.className = "btn btn-warning";
 }
 
+function correct(id) {
+	
+}
+
 var context = document.getElementById('context');
 function display4wait() {
 	context.innerHTML = "Waiting for start.";
@@ -132,11 +213,22 @@ function display4start() {
 function exec4users(func) {
 	users.stream().next(function(err, data) {
 		for(var i=0; i<data.length; i++) {
-		    func(data[i].id, data[i].value.name, data[i].value.count);
+			var id = data[i].id;
+			var name = data[i].value.name;
+			var count = data[i].value.count;
+			usersorder.get(id, function(err, datum) {
+				var order = 0;
+				if(!err) order = datum.value.order;
+				userspoint.get(id, function(err, datum) {
+					var point = 0;
+					if(!err) point = datum.value.point;
+					func(id, name, count, order, point);
+				});
+			});
 		}
 	});
 }
 
 function display4userset(sent) {
-	display(sent.id, sent.value.name, sent.value.count, sent.value.order);
+	display(sent.id, sent.value.name, sent.value.count, sent.value.order, sent.value.point);
 }
