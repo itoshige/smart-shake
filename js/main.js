@@ -42,7 +42,8 @@ var display = function(id, name, count, order, point){
 			
 			link.addEventListener('click', function() {
 					var correct = document.getElementById('correct');
-					correct.addEventListener('click', function() {
+					var incorrect = document.getElementById('incorrect');
+					var correctfunc = function() {
 							var givenPoint = document.getElementById('point-' + id);
 							givenPoint.className = "badge";
 							
@@ -66,13 +67,19 @@ var display = function(id, name, count, order, point){
 									userspoint.set(id, {'point': totalpoint});
 								});
 							});
-							correct.removeEventListener("click", arguments.callee, false);
-						}, false);
-					var incorrect = document.getElementById('incorrect');
-					incorrect.addEventListener('click', function() {
+							removeEvent();
+						}
+					var incorrectfunc = function() {
 							users.set(id, {'name': name, 'count': 0, 'order': 0});
-							incorrect.removeEventListener("click", arguments.callee, false);
-						}, false);
+							removeEvent();
+						}
+					function removeEvent() {
+						correct.removeEventListener("click", correctfunc, false);
+						incorrect.removeEventListener("click", incorrectfunc, false);
+					}
+					
+					correct.addEventListener('click', correctfunc, false);
+					incorrect.addEventListener('click', incorrectfunc, false);
 				link.removeEventListener("click", arguments.callee, false);
 				}, false);
 		}
@@ -120,7 +127,9 @@ var display = function(id, name, count, order, point){
 		
 		link.addEventListener('click', function() {
 				var correct = document.getElementById('correct');
-				correct.addEventListener('click', function() {
+				var incorrect = document.getElementById('incorrect');
+				
+				var correctfunc = function() {
 						var givenPoint = document.getElementById('point-' + id);
 						givenPoint.className = "badge";
 						
@@ -144,14 +153,18 @@ var display = function(id, name, count, order, point){
 								userspoint.set(id, {'point': totalpoint});
 							});
 						});
-						correct.removeEventListener("click", arguments.callee, false);
-					}, false);
-				
-				var incorrect = document.getElementById('incorrect');
-				incorrect.addEventListener('click', function() {
+						removeEvent();
+					}
+				var incorrectfunc = function() {
 						users.set(id, {'name': name, 'count': 0, 'order': 0});
-						incorrect.removeEventListener("click", arguments.callee, false);
-					}, false);
+						removeEvent();
+					}
+				function removeEvent() {
+					correct.removeEventListener("click", correctfunc, false);
+					incorrect.removeEventListener("click", incorrectfunc, false);
+				}
+				correct.addEventListener('click', correctfunc, false);
+				incorrect.addEventListener('click', incorrectfunc, false);
 			link.removeEventListener("click", arguments.callee, false);
 			}, false);
 	}
