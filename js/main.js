@@ -211,7 +211,7 @@ function resetData() {
 	display4wait();
 	game.set('start', {'flag': false});
 	nextorder.set('nextorder', {'cnt': 1});
-	nextpoints.set('nextpoints', {'cnt': 3});
+	nextpoints.set('nextpoints', {'cnt': 4});
 }
 
 var startBtn = document.getElementById('startBtn');
