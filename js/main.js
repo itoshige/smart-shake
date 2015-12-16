@@ -2,6 +2,7 @@ var milkcocoa = new MilkCocoa('hotihlxqti3.mlkcca.com');
 var users = milkcocoa.dataStore('shake/users');
 users.on('set', display4userset);
 var userspoint = milkcocoa.dataStore('shake/userspoint');
+userspoint.on('set', display4userpoint);
 
 var game = milkcocoa.dataStore('shake/game');
 var nextorder = milkcocoa.dataStore('shake/nextorder');
@@ -39,19 +40,55 @@ var display = function(id, name, count, order, point){
 			var link = document.getElementById("a-" + id);
 			link.href = "#modal";
 			link.innerHTML = order;
-			
+
+			///////////////////////////
+			userspoint.get(id, function(err, datum) {
+				var point = datum.value.point;
+				var givenPoint = document.getElementById('point-' + id);
+				givenPoint.className = "badge";
+				givenPoint.innerHTML = point;
+			});
+			///////////////////////////
+
 			link.addEventListener('click', function() {
+					var correct2 = document.getElementById('correct2');
 					var correct = document.getElementById('correct');
 					var incorrect = document.getElementById('incorrect');
+					var correct2func = function() {
+							var givenPoint = document.getElementById('point-' + id);
+							givenPoint.className = "badge";
+							
+							nextpoints.get('nextpoints', function(err, datum) {
+								var getpoint = parseInt(datum.value.cnt);
+									
+								userspoint.get(id, function(err, datum) {
+									var point = parseInt(datum.value.point);
+									var totalpoint = point + getpoint * 2;
+									givenPoint.innerHTML = totalpoint;
+									
+									var div = document.getElementById('progress-' + id);
+									div.className = "progress progress-bar progress-bar-success progress-striped active";
+									
+									var a = document.getElementById('a-' + id);
+									a.innerHTML = "correct!";
+									
+									if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
+									
+									//updateUser(id, name, count, order, totalpoint);
+									userspoint.set(id, {'point': totalpoint});
+								});
+							});
+							removeEvent();
+						}
 					var correctfunc = function() {
 							var givenPoint = document.getElementById('point-' + id);
 							givenPoint.className = "badge";
 							
 							nextpoints.get('nextpoints', function(err, datum) {
-								var getpoint = datum.value.cnt;
+								var getpoint = parseInt(datum.value.cnt);
 									
 								userspoint.get(id, function(err, datum) {
-									var point = datum.value.point;
+									var point = parseInt(datum.value.point);
 									var totalpoint = point + getpoint;
 									givenPoint.innerHTML = totalpoint;
 									
@@ -74,10 +111,12 @@ var display = function(id, name, count, order, point){
 							removeEvent();
 						}
 					function removeEvent() {
+						correct2.removeEventListener("click", correct2func, false);
 						correct.removeEventListener("click", correctfunc, false);
 						incorrect.removeEventListener("click", incorrectfunc, false);
 					}
 					
+					correct2.addEventListener('click', correct2func, false);
 					correct.addEventListener('click', correctfunc, false);
 					incorrect.addEventListener('click', incorrectfunc, false);
 				link.removeEventListener("click", arguments.callee, false);
@@ -125,19 +164,56 @@ var display = function(id, name, count, order, point){
 		link.href = "#modal";
 		link.innerHTML = order;
 		
+		//////////////////////
+		userspoint.get(id, function(err, datum) {
+			var point = datum.value.point;
+			var givenPoint = document.getElementById('point-' + id);
+			givenPoint.className = "badge";
+			givenPoint.innerHTML = point;
+		});
+		//////////////////////
+		
 		link.addEventListener('click', function() {
+				var correct2 = document.getElementById('correct2');
 				var correct = document.getElementById('correct');
 				var incorrect = document.getElementById('incorrect');
-				
+
+				var correct2func = function() {
+						var givenPoint = document.getElementById('point-' + id);
+						givenPoint.className = "badge";
+						
+						nextpoints.get('nextpoints', function(err, datum) {
+							var getpoint = parseInt(datum.value.cnt);
+							
+							userspoint.get(id, function(err, datum) {
+								var point = parseInt(datum.value.point);
+								var totalpoint = point + getpoint * 2;
+								givenPoint.innerHTML = totalpoint;
+								
+								var div = document.getElementById('progress-' + id);
+								div.className = "progress progress-bar progress-bar-success progress-striped active";
+								
+								var a = document.getElementById('a-' + id);
+								a.innerHTML = "correct!";
+								
+								if(getpoint >= 0) nextpoints.set('nextpoints', {'cnt': --getpoint});
+								
+								//updateUser(id, name, count, order, totalpoint);
+								userspoint.set(id, {'point': totalpoint});
+							});
+						});
+						removeEvent();
+					}
+
 				var correctfunc = function() {
 						var givenPoint = document.getElementById('point-' + id);
 						givenPoint.className = "badge";
 						
 						nextpoints.get('nextpoints', function(err, datum) {
-							var getpoint = datum.value.cnt;
+							var getpoint = parseInt(datum.value.cnt);
 							
 							userspoint.get(id, function(err, datum) {
-								var point = datum.value.point;
+								var point = parseInt(datum.value.point);
 								var totalpoint = point + getpoint;
 								givenPoint.innerHTML = totalpoint;
 								
@@ -160,9 +236,11 @@ var display = function(id, name, count, order, point){
 						removeEvent();
 					}
 				function removeEvent() {
+					correct2.removeEventListener("click", correct2func, false);
 					correct.removeEventListener("click", correctfunc, false);
 					incorrect.removeEventListener("click", incorrectfunc, false);
 				}
+				correct2.addEventListener('click', correct2func, false);
 				correct.addEventListener('click', correctfunc, false);
 				incorrect.addEventListener('click', incorrectfunc, false);
 			link.removeEventListener("click", arguments.callee, false);
@@ -255,4 +333,21 @@ function exec4users(func) {
 
 function display4userset(sent) {
 	display(sent.id, sent.value.name, sent.value.count, sent.value.order, sent.value.point);
+}
+
+function display4userpoint(sent) {
+	if(!sent.value.modify) return;
+	var id = sent.id;
+	var point = sent.value.point;
+
+	userspoint.get(id, function(err, datum) {
+		var div = document.getElementById('progress-' + id);
+		//div.className = "progress progress-bar progress-bar-success progress-striped active";
+		
+		var a = document.getElementById('a-' + id);
+		//a.innerHTML = "correct!";
+		var givenPoint = document.getElementById('point-' + id);
+		givenPoint.className = "badge";
+		givenPoint.innerHTML = point;
+	});
 }

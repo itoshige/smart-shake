@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Fru management tool</title>
+
+</head>
+<body>
+<style type="text/css">
+.table3 {
+  border-collapse: collapse;
+}
+.table3 th {
+  background-color: #cccccc;
+}
+</style>
+<table class="table3" border=1>
+ <tr><th>name</th><th>point</th><th>correct</th><th>count</th></tr>
+ <tr>
+ 	<td>チーム太田専務</td>
+ 	<td><input id="point1"><button onClick="setPoint1();return false;">set</button></td>
+	<td><button onClick="correct();return false;">correct</button></td>
+ 	<td><button onClick="resetCount1();return false;">reset</button></td>
+ </tr>
+ <tr>
+ 	<td>チーム谷崎専務</td>
+ 	<td><input id="point2"><button onClick="setPoint2();return false;">set</button></td>
+	<td><button onClick="correct2();return false;">correct</button></td>
+ 	<td><button onClick="resetCount2();return false;">reset</button></td>
+ </tr>
+ <tr>
+ 	<td>チーム中山部長</td>
+ 	<td><input id="point3"><button onClick="setPoint3();return false;">set</button></td>
+	<td><button onClick="correct3();return false;">correct</button></td>
+ 	<td><button onClick="resetCount3();return false;">reset</button></td>
+ </tr>
+<tr>
+ 	<td>チーム井口副部長</td>
+ 	<td><input id="point4"><button onClick="setPoint4();return false;">set</button></td>
+	<td><button onClick="correct4();return false;">correct</button></td>
+ 	<td><button onClick="resetCount4();return false;">reset</button></td>
+ </tr>
+<tr>
+ 	<td>チーム江藤室長</td>
+ 	<td><input id="point5"><button onClick="setPoint5();return false;">set</button></td>
+	<td><button onClick="correct5();return false;">correct</button></td>
+ 	<td><button onClick="resetCount5();return false;">reset</button></td>
+ </tr>
+</table>
+
+<br>
+next points: <input id="nextpoint"><button onClick="setNextpoint();return false;">set</button>
+
+<script src='https://cdn.mlkcca.com/v2.0.0/milkcocoa.js'></script>
+<script src="modify.js"></script>
+
+
+</body>
+</html>
