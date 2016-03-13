@@ -325,10 +325,19 @@ function display4start() {
 
 function exec4users(func) {
 	users.stream().next(function(err, data) {
+		data.sort(hikaku);
 		for(var i=0; i<data.length; i++) {
 		    func(data[i].id, data[i].value.name, data[i].value.count, data[i].value.order);
 		}
 	});
+}
+
+function hikaku(val1, val2){
+  if (val1.value.name.toString() < val2.value.name.toString()){
+    return -1;
+  }else{
+    return 1;
+  }
 }
 
 function display4userset(sent) {
@@ -345,9 +354,10 @@ function display4userpoint(sent) {
 		//div.className = "progress progress-bar progress-bar-success progress-striped active";
 		
 		var a = document.getElementById('a-' + id);
-		//a.innerHTML = "correct!";
 		var givenPoint = document.getElementById('point-' + id);
+		if(!givenPoint) return;
 		givenPoint.className = "badge";
 		givenPoint.innerHTML = point;
 	});
 }
+

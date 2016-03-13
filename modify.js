@@ -5,10 +5,10 @@ var users = milkcocoa.dataStore('shake/users');
 var nextpoints = milkcocoa.dataStore('shake/nextpoints');
 
 var id1= 'zat1ehr1lj';
-var id2= '';
-var id3= '';
-var id4= '';
-var id5= '';
+var id2= '25gv6myq9r';
+var id3= '0i1li0oip7';
+var id4= 'x23ngzorro';
+var id5= '80e99sjtjo';
 
 /// 1
 function setPoint1() {
@@ -26,6 +26,7 @@ function setPoint2() {
 }
 function resetCount2() {
 	resetCount(id2);
+	setName(id2);
 }
 
 /// 3
@@ -69,4 +70,8 @@ function setPoint(id, point) {
 
 function resetCount(id) {
 	users.set(id, {'name': name, 'count': 0, 'order': 0});
+}
+
+function setName(id) {
+	users.set(id, {'name': '5.チーム江藤室長', 'count': 0, 'order': 0});
 }
